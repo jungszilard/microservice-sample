@@ -1,0 +1,20 @@
+# deployment 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  # selector --> lecsekkolja az ossze pod-ot es azt hasznalja, aminek az app label-je posts
+  selector:
+    matchLabels:
+      app: posts
+  # template --> pod configuration: itt akarunk egy pod-ot, aminek van egy app label-je es annak a neve posts + container
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+        - name: posts
+          image: jungszilard/posts:0.0.1
