@@ -17,4 +17,6 @@ spec:
     spec:
       containers:
         - name: posts
-          image: jungszilard/posts:0.0.1
+        # ha nincs ott semilyen verzio akko a :latest-re referalunk
+        # image: jungszilard/posts:latest
+          image: jungszilard/posts
