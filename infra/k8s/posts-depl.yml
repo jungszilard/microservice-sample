@@ -20,3 +20,18 @@ spec:
         # ha nincs ott semilyen verzio akko a :latest-re referalunk
         # image: jungszilard/posts:latest
           image: jungszilard/posts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts
+  # k8s automatikusan megcsinalja nekunk, ez a type nem kotelezo, ha ClusterIP
+  type: ClusterIP
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
