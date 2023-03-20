@@ -1,4 +1,4 @@
-# deployment 
+# deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: posts
-        # ha nincs ott semilyen verzio akko a :latest-re referalunk
-        # image: jungszilard/posts:latest
+          # ha nincs ott semilyen verzio akko a :latest-re referalunk
+          # image: jungszilard/posts:latest
           image: jungszilard/posts
 ---
 apiVersion: v1
