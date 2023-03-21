@@ -1,0 +1,64 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      # azt mondja meg, h a k8s fodler-ben minden yaml file-t szpkodjon fel es futtassa
+      - ./infra/k8s/*
+build:
+  local:
+    # ha modositunk valamelyik service-ben akkor automatikusan push-olja be github-ra az image-t --> false --> ne pusholjuk
+    push: false
+  artifacts:
+    # az artifact-okkal elmondjuk skaffold-nak, hogy milyen projektjeink vannak es h miket kell karbantarani
+    - image: jungszilard/client
+      # client directory, ahol a forrasa van az image-nek
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          # itt azt mondjuk meg ha barmely js file-ban modositanank akkor a skaffold azt figyelje es azonnal frissitse a pod-ot, ha valtozas tortenne
+          # ha megvaltozik valami azonnal buildeli az image-t
+          - src: 'src/**/*.js'
+            dest: .
+    - image: jungszilard/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jungszilard/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jungszilard/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jungszilard/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: jungszilard/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
